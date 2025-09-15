@@ -1,0 +1,145 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/ir": {
+      "post": {
+        "operationId": "LircController_send",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrCodeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Lirc"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Jukeblade API",
+    "description": "",
+    "version": "0.0.2",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "IrCode": {
+        "type": "string",
+        "enum": [
+          "0x110015",
+          "0x11001d",
+          "0x110035",
+          "0x11001f",
+          "0x11004a",
+          "0x11004c",
+          "0x110028",
+          "0x110000",
+          "0x110001",
+          "0x110002",
+          "0x110003",
+          "0x110004",
+          "0x110005",
+          "0x110006",
+          "0x110007",
+          "0x110008",
+          "0x110027",
+          "0x110020",
+          "0x11000b",
+          "0x11002c",
+          "0x11000d",
+          "0x11000f",
+          "0x110069",
+          "0x11006b",
+          "0x11003f",
+          "0x110032",
+          "0x110039",
+          "0x110038",
+          "0x110030",
+          "0x110031",
+          "0x110033",
+          "0x110034",
+          "0x11003d",
+          "0x11003e"
+        ],
+        "x-enumNames": [
+          "POWER",
+          "CONTINUE",
+          "SHUFFLE",
+          "PROGRAM",
+          "DISC",
+          "GROUP",
+          "TIME_TEXT",
+          "NUM_1",
+          "NUM_2",
+          "NUM_3",
+          "NUM_4",
+          "NUM_5",
+          "NUM_6",
+          "NUM_7",
+          "NUM_8",
+          "NUM_9",
+          "GREATER_10",
+          "NUM_10_0",
+          "ENTER",
+          "REPEAT",
+          "CHECK",
+          "CLEAR",
+          "MEMO_INPUT",
+          "MEMO_SCAN",
+          "HIGHLIGHT",
+          "PLAY",
+          "PAUSE",
+          "STOP",
+          "AMS_BACK",
+          "AMS_FORWARD",
+          "AMS_REWIND",
+          "AMS_FASTFORWARD",
+          "DISC_SKIP_BACK",
+          "DISC_SKIP_FORWARD"
+        ]
+      },
+      "IrCodeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IrCode"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code"
+        ]
+      }
+    }
+  }
+}

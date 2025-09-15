@@ -27,6 +27,8 @@ export class LircService {
 				const command = `ir-ctl -S sony12:${code} -d ${this.device}`;
 				console.log(command);
 				await promisify(exec)(command);
+				await new Promise<void>((r) => setTimeout(r, 50));
+				await promisify(exec)(command);
 			} catch (e) {
 				console.error(e);
 			} finally {

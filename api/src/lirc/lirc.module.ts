@@ -5,5 +5,6 @@ import { LircController } from "./lirc.controller";
 @Module({
 	controllers: [LircController],
 	providers: [LircService],
+	exports: [LircService],
 })
 export class LircModule {}

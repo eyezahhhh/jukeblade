@@ -38,6 +38,197 @@
           "Lirc"
         ]
       }
+    },
+    "/discs/inserted": {
+      "get": {
+        "operationId": "DiscsController_getInsertedDiscs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Disc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
+    },
+    "/discs/uninserted": {
+      "get": {
+        "operationId": "DiscsController_getUninsertedDiscs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Disc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
+    },
+    "/discs": {
+      "put": {
+        "operationId": "DiscsController_createDisc",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDiscDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
+    },
+    "/discs/{uuid}": {
+      "get": {
+        "operationId": "DiscsController_getDisc",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      },
+      "patch": {
+        "operationId": "DiscsController_updateDisc",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDiscDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      },
+      "delete": {
+        "operationId": "DiscsController_deleteDisc",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
+    },
+    "/discs/{uuid}/play": {
+      "post": {
+        "operationId": "DiscsController_playDisc",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
     }
   },
   "info": {
@@ -139,6 +330,67 @@
         "required": [
           "code"
         ]
+      },
+      "Disc": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "nullable": true
+          },
+          "dateCreated": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "artist": {
+            "type": "string"
+          },
+          "album": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uuid",
+          "position",
+          "dateCreated",
+          "artist",
+          "album"
+        ]
+      },
+      "CreateDiscDto": {
+        "type": "object",
+        "properties": {
+          "artist": {
+            "type": "string"
+          },
+          "album": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "artist",
+          "album"
+        ]
+      },
+      "UpdateDiscDto": {
+        "type": "object",
+        "properties": {
+          "artist": {
+            "type": "string"
+          },
+          "album": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer"
+          }
+        }
       }
     }
   }

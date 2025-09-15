@@ -1,8 +1,19 @@
 .container {
 	border: 1px solid black;
 	cursor: pointer;
+	flex: 1;
+	border-radius: 5px;
+	background: linear-gradient(180deg, #616565 0%, #323733 10%, #070d0d 100%);
+	color: #d0d4c7;
+	transform: translateY(0);
+	transition: transform 0.05s;
+	font-size: 1.3rem;
+	padding: 6px 0;
 
-	&.pressed {
+	&.pressed,
+	&:active {
 		background: blue;
+		background: linear-gradient(0deg, #616565 0%, #323733 10%, #070d0d 100%);
+		transform: translateY(1px);
 	}
 }

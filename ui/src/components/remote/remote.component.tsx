@@ -18,7 +18,8 @@ export function Remote() {
 
 const LAYOUT: IrCode[][] = [
 	[IrCode.POWER],
-	[IrCode.CONTINUE, IrCode.SHUFFLE, IrCode.TIME_TEXT],
+	[IrCode.CONTINUE, IrCode.SHUFFLE, IrCode.PROGRAM],
+	[IrCode.DISC, IrCode.GROUP, IrCode.TIME_TEXT],
 	[IrCode.NUM_1, IrCode.NUM_2, IrCode.NUM_3],
 	[IrCode.NUM_4, IrCode.NUM_5, IrCode.NUM_6],
 	[IrCode.NUM_7, IrCode.NUM_8, IrCode.NUM_9],

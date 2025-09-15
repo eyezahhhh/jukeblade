@@ -1,0 +1,13 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 440px;
+	max-width: calc(100% - 20px);
+	margin: 30px auto;
+
+	.row {
+		display: flex;
+		gap: 4px;
+	}
+}

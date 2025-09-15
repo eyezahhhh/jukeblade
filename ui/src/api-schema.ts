@@ -4,128 +4,375 @@
  */
 
 export interface paths {
-	"/": {
-		parameters: {
-			query?: never;
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		get: operations["AppController_getHello"];
-		put?: never;
-		post?: never;
-		delete?: never;
-		options?: never;
-		head?: never;
-		patch?: never;
-		trace?: never;
-	};
-	"/ir": {
-		parameters: {
-			query?: never;
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		get?: never;
-		put?: never;
-		post: operations["LircController_send"];
-		delete?: never;
-		options?: never;
-		head?: never;
-		patch?: never;
-		trace?: never;
-	};
+    "/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AppController_getHello"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ir": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["LircController_send"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/discs/inserted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DiscsController_getInsertedDiscs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/discs/uninserted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DiscsController_getUninsertedDiscs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/discs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["DiscsController_createDisc"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/discs/{uuid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DiscsController_getDisc"];
+        put?: never;
+        post?: never;
+        delete: operations["DiscsController_deleteDisc"];
+        options?: never;
+        head?: never;
+        patch: operations["DiscsController_updateDisc"];
+        trace?: never;
+    };
+    "/discs/{uuid}/play": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["DiscsController_playDisc"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-	schemas: {
-		/** @enum {string} */
-		IrCode: IrCode;
-		IrCodeDto: {
-			code: components["schemas"]["IrCode"];
-		};
-	};
-	responses: never;
-	parameters: never;
-	requestBodies: never;
-	headers: never;
-	pathItems: never;
+    schemas: {
+        /** @enum {string} */
+        IrCode: IrCode;
+        IrCodeDto: {
+            code: components["schemas"]["IrCode"];
+        };
+        Disc: {
+            uuid: string;
+            position: number | null;
+            /** Format: date-time */
+            dateCreated: string;
+            artist: string;
+            album: string;
+        };
+        CreateDiscDto: {
+            artist: string;
+            album: string;
+            position?: number;
+        };
+        UpdateDiscDto: {
+            artist?: string;
+            album?: string;
+            position?: number;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
+export type IrCodeDto = components['schemas']['IrCodeDto'];
+export type Disc = components['schemas']['Disc'];
+export type CreateDiscDto = components['schemas']['CreateDiscDto'];
+export type UpdateDiscDto = components['schemas']['UpdateDiscDto'];
 export type $defs = Record<string, never>;
 export interface operations {
-	AppController_getHello: {
-		parameters: {
-			query?: never;
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		requestBody?: never;
-		responses: {
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content?: never;
-			};
-		};
-	};
-	LircController_send: {
-		parameters: {
-			query?: never;
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["IrCodeDto"];
-			};
-		};
-		responses: {
-			204: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content?: never;
-			};
-		};
-	};
+    AppController_getHello: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LircController_send: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IrCodeDto"];
+            };
+        };
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    DiscsController_getInsertedDiscs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"][];
+                };
+            };
+        };
+    };
+    DiscsController_getUninsertedDiscs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"][];
+                };
+            };
+        };
+    };
+    DiscsController_createDisc: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDiscDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"];
+                };
+            };
+        };
+    };
+    DiscsController_getDisc: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"];
+                };
+            };
+        };
+    };
+    DiscsController_deleteDisc: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    DiscsController_updateDisc: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateDiscDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"];
+                };
+            };
+        };
+    };
+    DiscsController_playDisc: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
 }
 export enum IrCode {
-	POWER = "0x110015",
-	CONTINUE = "0x11001d",
-	SHUFFLE = "0x110035",
-	PROGRAM = "0x11001f",
-	DISC = "0x11004a",
-	GROUP = "0x11004c",
-	TIME_TEXT = "0x110028",
-	NUM_1 = "0x110000",
-	NUM_2 = "0x110001",
-	NUM_3 = "0x110002",
-	NUM_4 = "0x110003",
-	NUM_5 = "0x110004",
-	NUM_6 = "0x110005",
-	NUM_7 = "0x110006",
-	NUM_8 = "0x110007",
-	NUM_9 = "0x110008",
-	GREATER_10 = "0x110027",
-	NUM_10_0 = "0x110020",
-	ENTER = "0x11000b",
-	REPEAT = "0x11002c",
-	CHECK = "0x11000d",
-	CLEAR = "0x11000f",
-	MEMO_INPUT = "0x110069",
-	MEMO_SCAN = "0x11006b",
-	HIGHLIGHT = "0x11003f",
-	PLAY = "0x110032",
-	PAUSE = "0x110039",
-	STOP = "0x110038",
-	AMS_BACK = "0x110030",
-	AMS_FORWARD = "0x110031",
-	AMS_REWIND = "0x110033",
-	AMS_FASTFORWARD = "0x110034",
-	DISC_SKIP_BACK = "0x11003d",
-	DISC_SKIP_FORWARD = "0x11003e",
+    POWER = "0x110015",
+    CONTINUE = "0x11001d",
+    SHUFFLE = "0x110035",
+    PROGRAM = "0x11001f",
+    DISC = "0x11004a",
+    GROUP = "0x11004c",
+    TIME_TEXT = "0x110028",
+    NUM_1 = "0x110000",
+    NUM_2 = "0x110001",
+    NUM_3 = "0x110002",
+    NUM_4 = "0x110003",
+    NUM_5 = "0x110004",
+    NUM_6 = "0x110005",
+    NUM_7 = "0x110006",
+    NUM_8 = "0x110007",
+    NUM_9 = "0x110008",
+    GREATER_10 = "0x110027",
+    NUM_10_0 = "0x110020",
+    ENTER = "0x11000b",
+    REPEAT = "0x11002c",
+    CHECK = "0x11000d",
+    CLEAR = "0x11000f",
+    MEMO_INPUT = "0x110069",
+    MEMO_SCAN = "0x11006b",
+    HIGHLIGHT = "0x11003f",
+    PLAY = "0x110032",
+    PAUSE = "0x110039",
+    STOP = "0x110038",
+    AMS_BACK = "0x110030",
+    AMS_FORWARD = "0x110031",
+    AMS_REWIND = "0x110033",
+    AMS_FASTFORWARD = "0x110034",
+    DISC_SKIP_BACK = "0x11003d",
+    DISC_SKIP_FORWARD = "0x11003e"
 }

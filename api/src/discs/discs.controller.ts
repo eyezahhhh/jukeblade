@@ -15,6 +15,7 @@ import { Disc } from "./entity/disc.entity";
 import { CreateDiscDto } from "./dto/create-disc.dto";
 import { UpdateDiscDto } from "./dto/update-disc.dto";
 import { AddTrackDto } from "./dto/add-track.dto";
+import { PlayDiscDto } from "./dto/play-disc.dto";
 
 @Controller("discs")
 export class DiscsController {
@@ -68,9 +69,17 @@ export class DiscsController {
 
 	@Post(":uuid/play")
 	@ApiNoContentResponse()
-	async playDisc(@Param("uuid") uuid: string) {
+	async playDisc(@Param("uuid") uuid: string, @Body() dto: PlayDiscDto) {
 		const disc = await this.discsService.findByUuid(uuid);
-		this.discsService.play(disc);
+		if (dto.trackUuid) {
+			const track = disc.tracks.find((track) => track.uuid == dto.trackUuid);
+			if (!track) {
+				throw new NotFoundException("Track not found");
+			}
+			await this.discsService.playTrack(disc, track);
+		} else {
+			this.discsService.play(disc);
+		}
 	}
 
 	@Put(":uuid/track")

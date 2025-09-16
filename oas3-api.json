@@ -220,6 +220,16 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayDiscDto"
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "description": ""
@@ -496,6 +506,14 @@
           },
           "position": {
             "type": "integer"
+          }
+        }
+      },
+      "PlayDiscDto": {
+        "type": "object",
+        "properties": {
+          "trackUuid": {
+            "type": "string"
           }
         }
       },

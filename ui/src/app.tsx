@@ -35,13 +35,15 @@ export default function App() {
 					Discs
 				</Link>
 			</div>
-			<Routes>
-				<Route path="/remote" element={<RemotePage />} />
-				<Route path="/discs" element={<DiscsPage />} />
-				<Route path="/discs/create" element={<CreateDiscPage />} />
-				<Route path="/disc/:uuid" element={<DiscPage />} />
-				<Route path="/disc/:uuid/add" element={<AddTrackPage />} />
-			</Routes>
+			<div className={styles.content}>
+				<Routes>
+					<Route path="/remote" element={<RemotePage />} />
+					<Route path="/discs" element={<DiscsPage />} />
+					<Route path="/discs/create" element={<CreateDiscPage />} />
+					<Route path="/disc/:uuid" element={<DiscPage />} />
+					<Route path="/disc/:uuid/add" element={<AddTrackPage />} />
+				</Routes>
+			</div>
 		</div>
 	);
 }

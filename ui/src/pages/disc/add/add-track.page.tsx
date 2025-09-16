@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useDisc from "../../../hooks/disc.hook";
 import { useState } from "react";
 import Api from "../../../api";
@@ -11,6 +11,7 @@ export function AddTrackPage() {
 	const [index, setIndex] = useState("");
 	const [isCreating, setIsCreating] = useState(false);
 	const { fetchInsertedDiscs } = useDiscsStore();
+	const navigate = useNavigate();
 
 	if (!disc) {
 		return <h1>Loading Disc</h1>;
@@ -44,7 +45,7 @@ export function AddTrackPage() {
 		})
 			.then(() => {
 				fetchInsertedDiscs().catch(console.error);
-				navigate("/discs");
+				navigate(`/disc/${disc.uuid}`);
 			})
 			.finally(() => {
 				setIsCreating(false);
@@ -55,15 +56,16 @@ export function AddTrackPage() {
 		<div>
 			<h1>Add Track</h1>
 			<input
-				value={album}
-				onChange={(e) => setAlbum(e.currentTarget.value.substring(0, 500))}
-				placeholder="Album"
+				value={title}
+				onChange={(e) => setTitle(e.currentTarget.value.substring(0, 500))}
+				placeholder="Title"
 			/>
 			<input
-				value={position}
-				onChange={(e) => setPosition(e.currentTarget.value)}
-				placeholder="Position"
+				value={index}
+				onChange={(e) => setIndex(e.currentTarget.value)}
+				placeholder="Index"
 			/>
+			<button onClick={submit}>Create</button>
 		</div>
 	);
 }

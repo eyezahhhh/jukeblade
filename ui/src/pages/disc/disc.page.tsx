@@ -3,6 +3,9 @@ import { Link, useParams } from "react-router";
 import Api from "../../api";
 import styles from "./disc.module.scss";
 import useDisc from "../../hooks/disc.hook";
+import TrackListEntry from "../../components/track-list-entry";
+import List from "../../components/list";
+import Row from "../../components/row";
 
 export function DiscPage() {
 	const { uuid } = useParams();
@@ -24,23 +27,28 @@ export function DiscPage() {
 					uuid: disc.uuid,
 				},
 			},
+			body: {},
 		}).finally(() => setIsPlaying(false));
 	};
 
 	return (
-		<div>
-			<h1>{disc.album}</h1>
-			<h2>{disc.artist}</h2>
-			<button onClick={play}>Play</button>
-			<Link to={`/disc/${disc.uuid}/add`}>Add track</Link>
-			<div className={styles.tracks}>
+		<div className={styles.container}>
+			<h1 className={styles.album}>{disc.album}</h1>
+			<h2 className={styles.artist}>{disc.artist}</h2>
+			<Row>
+				<button onClick={play} className="button">
+					Play
+				</button>
+				<Link to={`/disc/${disc.uuid}/add`} className="button">
+					Add track
+				</Link>
+			</Row>
+
+			<List className={styles.tracks}>
 				{disc.tracks.map((track) => (
-					<div key={track.uuid}>
-						<span>{track.index}</span>
-						<span>{track.title}</span>
-					</div>
+					<TrackListEntry track={track} key={track.uuid} disc={disc} />
 				))}
-			</div>
+			</List>
 		</div>
 	);
 }

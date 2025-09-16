@@ -6,10 +6,31 @@
 
 body {
 	margin: 0;
-	background: #48494d;
+	background: #181818;
 	font-family: var(--font);
+	color: #f8f9ff;
 }
 
 button {
 	font-family: var(--font);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.button {
+	text-decoration: none;
+	background: #e3e4e9;
+	border: 1px solid #f8f9ff;
+	border-radius: 3px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	padding: 4px 8px;
+	color: #000;
+
+	&:hover,
+	&:focus {
+		background: #f8f9ff;
+	}
 }

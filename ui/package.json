@@ -12,6 +12,10 @@
 		"gen:types": "openapi-typescript ../oas3-api.json -o src/api-schema.ts --enum --root-types --root-types-no-schema-prefix"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@mui/icons-material": "^7.3.2",
+		"@mui/material": "^7.3.2",
 		"jukeblade-typescript-client": "file:../api/client/typescript",
 		"openapi-fetch": "^0.14.0",
 		"react": "^19.1.1",

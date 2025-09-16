@@ -182,6 +182,9 @@ export interface components {
             album?: string;
             position?: number;
         };
+        PlayDiscDto: {
+            trackUuid?: string;
+        };
         AddTrackDto: {
             title: string;
             index: number;
@@ -198,6 +201,7 @@ export type Disc = components['schemas']['Disc'];
 export type Track = components['schemas']['Track'];
 export type CreateDiscDto = components['schemas']['CreateDiscDto'];
 export type UpdateDiscDto = components['schemas']['UpdateDiscDto'];
+export type PlayDiscDto = components['schemas']['PlayDiscDto'];
 export type AddTrackDto = components['schemas']['AddTrackDto'];
 export type $defs = Record<string, never>;
 export interface operations {
@@ -374,7 +378,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlayDiscDto"];
+            };
+        };
         responses: {
             204: {
                 headers: {

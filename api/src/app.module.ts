@@ -4,6 +4,7 @@ import { AppService } from "./app.service";
 import { LircModule } from "./lirc/lirc.module";
 import { DiscsModule } from "./discs/discs.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { SearchModule } from "./search/search.module";
 
 @Module({
 	imports: [
@@ -15,6 +16,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 		}),
 		LircModule,
 		DiscsModule,
+		SearchModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

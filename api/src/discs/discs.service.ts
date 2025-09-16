@@ -121,8 +121,35 @@ export class DiscsService {
 		return sequence;
 	}
 
+	async getTrackPlaySequence(disc: Disc, track: Track) {
+		track = await this.tracksRepository.findOne({
+			where: {
+				uuid: track.uuid,
+			},
+			relations: {
+				disc: true,
+			},
+		});
+		if (!track) {
+			throw new NotFoundException("Track not found");
+		}
+		if (track.disc.uuid != disc.uuid) {
+			throw new BadRequestException("Track is not from disc");
+		}
+		const sequence = this.getPlaySequence(disc);
+		// todo: add track sequence here
+
+		return sequence;
+	}
+
 	play(disc: Disc) {
 		const sequence = this.getPlaySequence(disc);
+		console.log(sequence);
+		this.lircService.send(sequence);
+	}
+
+	async playTrack(disc: Disc, track: Track) {
+		const sequence = await this.getTrackPlaySequence(disc, track);
 		console.log(sequence);
 		this.lircService.send(sequence);
 	}

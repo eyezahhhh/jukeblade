@@ -1,0 +1,58 @@
+.container {
+	display: flex;
+	font-size: 1.2rem;
+	padding: 4px 8px;
+	color: #f8f9ff;
+
+	&:focus,
+	&:hover {
+		background: #272727;
+
+		.start {
+			.index {
+				display: none;
+			}
+
+			.play {
+				display: block;
+			}
+		}
+	}
+
+	.start {
+		width: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.play {
+			display: none;
+			width: 25px;
+			height: 25px;
+			border: none;
+			position: relative;
+			background: transparent;
+			cursor: pointer;
+			color: #f8f9ff;
+
+			svg {
+				display: block;
+				margin: 0;
+				position: absolute;
+				inset: 0;
+			}
+		}
+	}
+
+	.title {
+		flex: 1;
+	}
+
+	.artist {
+		flex: 1;
+	}
+
+	.album {
+		flex: 1;
+	}
+}

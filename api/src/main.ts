@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { readFileSync, writeFileSync } from "fs";
+import VERSION from "./version";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -16,12 +17,9 @@ async function bootstrap() {
 
 	app.enableCors();
 
-	const packageJson = JSON.parse(readFileSync("package.json").toString());
-	const version = packageJson.version as string;
-
 	const config = new DocumentBuilder()
 		.setTitle("Jukeblade API")
-		.setVersion(version)
+		.setVersion(VERSION)
 		.build();
 	const document = SwaggerModule.createDocument(app, config);
 	writeFileSync("../oas3-api.json", JSON.stringify(document, null, 2));

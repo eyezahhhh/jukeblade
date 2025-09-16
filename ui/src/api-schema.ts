@@ -116,6 +116,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/discs/{uuid}/track": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["DiscsController_addTrack"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/discs/{discUuid}/track/{trackUuid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["DiscsController_deleteTrack"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -132,6 +164,13 @@ export interface components {
             dateCreated: string;
             artist: string;
             album: string;
+            tracks: components["schemas"]["Track"][];
+        };
+        Track: {
+            uuid: string;
+            index: number;
+            title: string;
+            disc?: components["schemas"]["Disc"];
         };
         CreateDiscDto: {
             artist: string;
@@ -143,6 +182,10 @@ export interface components {
             album?: string;
             position?: number;
         };
+        AddTrackDto: {
+            title: string;
+            index: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -152,8 +195,10 @@ export interface components {
 }
 export type IrCodeDto = components['schemas']['IrCodeDto'];
 export type Disc = components['schemas']['Disc'];
+export type Track = components['schemas']['Track'];
 export type CreateDiscDto = components['schemas']['CreateDiscDto'];
 export type UpdateDiscDto = components['schemas']['UpdateDiscDto'];
+export type AddTrackDto = components['schemas']['AddTrackDto'];
 export type $defs = Record<string, never>;
 export interface operations {
     AppController_getHello: {
@@ -336,6 +381,53 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    DiscsController_addTrack: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddTrackDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"];
+                };
+            };
+        };
+    };
+    DiscsController_deleteTrack: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uuid: string;
+                trackUuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Disc"];
+                };
             };
         };
     };

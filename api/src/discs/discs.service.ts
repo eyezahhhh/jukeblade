@@ -11,12 +11,16 @@ import { CreateDiscDto } from "./dto/create-disc.dto";
 import { UpdateDiscDto } from "./dto/update-disc.dto";
 import { LircService } from "src/lirc/lirc.service";
 import IrCode from "src/lirc/enum/ir-code.enum";
+import { AddTrackDto } from "./dto/add-track.dto";
+import { Track } from "./entity/track.entity";
 
 @Injectable()
 export class DiscsService {
 	constructor(
 		@InjectRepository(Disc)
 		private readonly discsRepository: Repository<Disc>,
+		@InjectRepository(Track)
+		private readonly tracksRepository: Repository<Track>,
 		private readonly lircService: LircService,
 	) {}
 
@@ -121,5 +125,37 @@ export class DiscsService {
 		const sequence = this.getPlaySequence(disc);
 		console.log(sequence);
 		this.lircService.send(sequence);
+	}
+
+	async addTrack(disc: Disc, dto: AddTrackDto) {
+		disc = await this.findByUuid(disc.uuid);
+		if (disc.tracks.some((track) => track.index == dto.index)) {
+			throw new BadRequestException("Track already exists at index");
+		}
+		const track = this.tracksRepository.create({
+			title: dto.title,
+			index: dto.index,
+			disc,
+		});
+		await this.tracksRepository.insert(track);
+		disc.tracks.push(track);
+		return disc;
+	}
+
+	async deleteTrack(track: Track) {
+		const uuid = track.uuid;
+		track = await this.tracksRepository.findOne({
+			where: { uuid },
+			relations: {
+				disc: true,
+			},
+		});
+		if (!track) {
+			throw new NotFoundException("Track not found");
+		}
+		const disc = track.disc;
+		await this.tracksRepository.remove(track);
+		disc.tracks = disc.tracks.filter((track) => track.uuid != uuid);
+		return disc;
 	}
 }

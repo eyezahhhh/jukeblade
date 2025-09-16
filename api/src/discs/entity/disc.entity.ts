@@ -3,8 +3,10 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
+import { Track } from "./track.entity";
 
 @Entity("discs")
 export class Disc {
@@ -48,4 +50,12 @@ export class Disc {
 		type: String,
 	})
 	album: string;
+
+	@OneToMany(() => Track, (track) => track.disc, {
+		eager: true,
+	})
+	@ApiProperty({
+		type: () => [Track],
+	})
+	tracks: Track[];
 }

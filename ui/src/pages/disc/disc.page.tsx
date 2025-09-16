@@ -1,35 +1,13 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import type { Disc } from "../../api-schema";
+import { useState } from "react";
+import { Link, useParams } from "react-router";
 import Api from "../../api";
+import styles from "./disc.module.scss";
+import useDisc from "../../hooks/disc.hook";
 
 export function DiscPage() {
 	const { uuid } = useParams();
-	const [disc, setDisc] = useState<Disc | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-
-	useEffect(() => {
-		if (!uuid) {
-			return;
-		}
-		const controller = new AbortController();
-		Api.GET("/discs/{uuid}", {
-			params: {
-				path: {
-					uuid,
-				},
-			},
-			signal: controller.signal,
-		}).then(({ data }) => {
-			if (data) {
-				setDisc(data);
-			}
-		});
-
-		return () => {
-			controller.abort();
-		};
-	}, [uuid]);
+	const disc = useDisc(uuid);
 
 	if (!disc) {
 		return <h1>Loading</h1>;
@@ -54,6 +32,15 @@ export function DiscPage() {
 			<h1>{disc.album}</h1>
 			<h2>{disc.artist}</h2>
 			<button onClick={play}>Play</button>
+			<Link to={`/disc/${disc.uuid}/add`}>Add track</Link>
+			<div className={styles.tracks}>
+				{disc.tracks.map((track) => (
+					<div key={track.uuid}>
+						<span>{track.index}</span>
+						<span>{track.title}</span>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

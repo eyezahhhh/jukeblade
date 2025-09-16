@@ -5,6 +5,7 @@ import { cc } from "./utils/string.util";
 import DiscsPage from "./pages/discs";
 import CreateDiscPage from "./pages/discs/create";
 import DiscPage from "./pages/disc";
+import AddTrackPage from "./pages/disc/add";
 
 export default function App() {
 	const location = useLocation();
@@ -39,6 +40,7 @@ export default function App() {
 				<Route path="/discs" element={<DiscsPage />} />
 				<Route path="/discs/create" element={<CreateDiscPage />} />
 				<Route path="/disc/:uuid" element={<DiscPage />} />
+				<Route path="/disc/:uuid/add" element={<AddTrackPage />} />
 			</Routes>
 		</div>
 	);

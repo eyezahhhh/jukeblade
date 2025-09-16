@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import {
 	IsInt,
+	IsNotEmpty,
 	IsOptional,
 	IsString,
-	IsUUID,
 	Max,
 	MaxLength,
 	Min,
@@ -13,7 +13,7 @@ import {
 export class UpdateDiscDto {
 	@IsOptional()
 	@IsString()
-	@MinLength(1)
+	@IsNotEmpty()
 	@MaxLength(300)
 	@ApiPropertyOptional({
 		type: String,
@@ -22,7 +22,7 @@ export class UpdateDiscDto {
 
 	@IsOptional()
 	@IsString()
-	@MinLength(1)
+	@IsNotEmpty()
 	@MaxLength(500)
 	@ApiPropertyOptional({
 		type: String,

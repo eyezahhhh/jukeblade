@@ -27,11 +27,6 @@ export function CreateDiscPage() {
 			}
 			finalPosition = number;
 		}
-		console.log({
-			artist,
-			album,
-			position: finalPosition,
-		});
 
 		setIsCreating(true);
 		Api.PUT("/discs", {

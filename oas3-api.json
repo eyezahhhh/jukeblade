@@ -229,6 +229,84 @@
           "Discs"
         ]
       }
+    },
+    "/discs/{uuid}/track": {
+      "put": {
+        "operationId": "DiscsController_addTrack",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTrackDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
+    },
+    "/discs/{discUuid}/track/{trackUuid}": {
+      "delete": {
+        "operationId": "DiscsController_deleteTrack",
+        "parameters": [
+          {
+            "name": "uuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "trackUuid",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disc"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Discs"
+        ]
+      }
     }
   },
   "info": {
@@ -350,6 +428,12 @@
           },
           "album": {
             "type": "string"
+          },
+          "tracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
           }
         },
         "required": [
@@ -357,7 +441,30 @@
           "position",
           "dateCreated",
           "artist",
-          "album"
+          "album",
+          "tracks"
+        ]
+      },
+      "Track": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "disc": {
+            "$ref": "#/components/schemas/Disc"
+          }
+        },
+        "required": [
+          "uuid",
+          "index",
+          "title"
         ]
       },
       "CreateDiscDto": {
@@ -391,6 +498,21 @@
             "type": "integer"
           }
         }
+      },
+      "AddTrackDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "title",
+          "index"
+        ]
       }
     }
   }

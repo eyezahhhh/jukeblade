@@ -14,6 +14,7 @@ import { ApiNoContentResponse, ApiOkResponse } from "@nestjs/swagger";
 import { Disc } from "./entity/disc.entity";
 import { CreateDiscDto } from "./dto/create-disc.dto";
 import { UpdateDiscDto } from "./dto/update-disc.dto";
+import { AddTrackDto } from "./dto/add-track.dto";
 
 @Controller("discs")
 export class DiscsController {
@@ -23,7 +24,7 @@ export class DiscsController {
 	@ApiOkResponse({
 		type: [Disc],
 	})
-	async getInsertedDiscs() {
+	getInsertedDiscs() {
 		return this.discsService.findAllInserted();
 	}
 
@@ -70,5 +71,30 @@ export class DiscsController {
 	async playDisc(@Param("uuid") uuid: string) {
 		const disc = await this.discsService.findByUuid(uuid);
 		this.discsService.play(disc);
+	}
+
+	@Put(":uuid/track")
+	@ApiOkResponse({
+		type: Disc,
+	})
+	async addTrack(@Param("uuid") uuid: string, @Body() dto: AddTrackDto) {
+		const disc = await this.discsService.findByUuid(uuid);
+		return await this.discsService.addTrack(disc, dto);
+	}
+
+	@Delete(":discUuid/track/:trackUuid")
+	@ApiOkResponse({
+		type: Disc,
+	})
+	async deleteTrack(
+		@Param("uuid") discUuid: string,
+		@Param("trackUuid") trackUuid: string,
+	) {
+		const disc = await this.discsService.findByUuid(discUuid);
+		const track = disc.tracks.find((track) => track.uuid == trackUuid);
+		if (!track) {
+			throw new NotFoundException("Track not found");
+		}
+		return await this.discsService.deleteTrack(track);
 	}
 }

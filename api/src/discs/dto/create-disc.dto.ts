@@ -1,17 +1,17 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
 	IsInt,
+	IsNotEmpty,
 	IsOptional,
 	IsString,
 	Max,
 	MaxLength,
 	Min,
-	MinLength,
 } from "class-validator";
 
 export class CreateDiscDto {
 	@IsString()
-	@MinLength(1)
+	@IsNotEmpty()
 	@MaxLength(300)
 	@ApiProperty({
 		type: String,
@@ -19,7 +19,7 @@ export class CreateDiscDto {
 	artist: string;
 
 	@IsString()
-	@MinLength(1)
+	@IsNotEmpty()
 	@MaxLength(500)
 	@ApiProperty({
 		type: String,

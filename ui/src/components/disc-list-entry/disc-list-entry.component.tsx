@@ -9,9 +9,13 @@ interface Props {
 export function DiscListEntry({ disc }: Props) {
 	return (
 		<Link to={`/disc/${disc.uuid}`} className={styles.container}>
-			<span className={styles.position}>{disc.position || "-"}</span>
-			<span className={styles.artist}>{disc.artist}</span>
-			<span className={styles.album}>{disc.album}</span>
+			<div className={styles.disc}>
+				<span className={styles.position}>{disc.position || "-"}</span>
+				<div className={styles.info}>
+					<span className={styles.artist}>{disc.artist}</span>
+					<span className={styles.album}>{disc.album}</span>
+				</div>
+			</div>
 		</Link>
 	);
 }

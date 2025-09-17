@@ -9,9 +9,17 @@ interface Props {
 	track: Track;
 	disc?: Disc;
 	onDelete?: (disc: Disc) => void;
+	noArtist?: boolean;
+	noAlbum?: boolean;
 }
 
-export function TrackListEntry({ track, disc: propDisc, onDelete }: Props) {
+export function TrackListEntry({
+	track,
+	disc: propDisc,
+	onDelete,
+	noArtist,
+	noAlbum,
+}: Props) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
 
@@ -47,7 +55,7 @@ export function TrackListEntry({ track, disc: propDisc, onDelete }: Props) {
 		Api.DELETE("/discs/{discUuid}/track/{trackUuid}", {
 			params: {
 				path: {
-					uuid: disc.uuid,
+					discUuid: disc.uuid,
 					trackUuid: track.uuid,
 				},
 			},
@@ -64,18 +72,31 @@ export function TrackListEntry({ track, disc: propDisc, onDelete }: Props) {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.start}>
-				<span className={styles.index}>{track.index}</span>
-				<button className={styles.play} onClick={play}>
-					<PlayArrowIcon />
+			<div className={styles.track}>
+				<div className={styles.start}>
+					<span className={styles.index}>{track.index}</span>
+					<button className={styles.play} onClick={play}>
+						<PlayArrowIcon />
+					</button>
+				</div>
+				<div className={styles.info}>
+					<span className={styles.title}>{track.title}</span>
+					{!noArtist && (
+						<span className={styles.artist}>
+							{disc?.artist || "Unknown Artist"}
+						</span>
+					)}
+					{!noAlbum && (
+						<span className={styles.album}>
+							{disc?.album || "Unknown Album"}
+						</span>
+					)}
+				</div>
+
+				<button className={styles.delete} onClick={deleteTrack}>
+					<DeleteIcon />
 				</button>
 			</div>
-			<span className={styles.title}>{track.title}</span>
-			<span className={styles.artist}>{disc?.artist || "Unknown Artist"}</span>
-			<span className={styles.album}>{disc?.album || "Unknown Album"}</span>
-			<button className={styles.delete} onClick={deleteTrack}>
-				<DeleteIcon />
-			</button>
 		</div>
 	);
 }

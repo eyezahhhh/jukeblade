@@ -148,6 +148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/search/{query}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SearchController_search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -176,6 +192,7 @@ export interface components {
             artist: string;
             album: string;
             position?: number;
+            tracks?: string[];
         };
         UpdateDiscDto: {
             artist?: string;
@@ -188,6 +205,22 @@ export interface components {
         AddTrackDto: {
             title: string;
             index: number;
+        };
+        SearchReleaseTrack: {
+            position: number;
+            title: string;
+            duration: number;
+        };
+        SearchReleaseMedia: {
+            format: string | null;
+            tracks: components["schemas"]["SearchReleaseTrack"][];
+        };
+        SearchRelease: {
+            id: string;
+            artist: string;
+            title: string;
+            albumCover: string | null;
+            media: components["schemas"]["SearchReleaseMedia"][];
         };
     };
     responses: never;
@@ -203,6 +236,9 @@ export type CreateDiscDto = components['schemas']['CreateDiscDto'];
 export type UpdateDiscDto = components['schemas']['UpdateDiscDto'];
 export type PlayDiscDto = components['schemas']['PlayDiscDto'];
 export type AddTrackDto = components['schemas']['AddTrackDto'];
+export type SearchReleaseTrack = components['schemas']['SearchReleaseTrack'];
+export type SearchReleaseMedia = components['schemas']['SearchReleaseMedia'];
+export type SearchRelease = components['schemas']['SearchRelease'];
 export type $defs = Record<string, never>;
 export interface operations {
     AppController_getHello: {
@@ -435,6 +471,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Disc"];
+                };
+            };
+        };
+    };
+    SearchController_search: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                query: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchRelease"][];
                 };
             };
         };

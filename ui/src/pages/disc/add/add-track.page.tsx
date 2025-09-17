@@ -18,7 +18,7 @@ export function AddTrackPage() {
 	}
 
 	const submit = () => {
-		if (!title || !index) {
+		if (!title || !index || isCreating) {
 			return;
 		}
 

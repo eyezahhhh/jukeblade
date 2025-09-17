@@ -11,4 +11,21 @@
 	.artist {
 		margin: 0;
 	}
+
+	.position {
+		margin: 0;
+		font-weight: normal;
+		font-size: 1rem;
+	}
+}
+
+.editModal {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	h1 {
+		margin: 0;
+		text-align: center;
+	}
 }

@@ -28,5 +28,5 @@ export default function useDisc(uuid?: string) {
 		};
 	}, [uuid]);
 
-	return disc;
+	return [disc, setDisc] as [Disc, (disc: Disc) => void];
 }

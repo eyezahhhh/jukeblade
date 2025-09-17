@@ -7,7 +7,6 @@ import {
 	Max,
 	MaxLength,
 	Min,
-	MinLength,
 } from "class-validator";
 
 export class UpdateDiscDto {
@@ -35,6 +34,7 @@ export class UpdateDiscDto {
 	@Max(200)
 	@ApiPropertyOptional({
 		type: "integer",
+		nullable: true,
 	})
-	position?: number;
+	position?: number | null;
 }

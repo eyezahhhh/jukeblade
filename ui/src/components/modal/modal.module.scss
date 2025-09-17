@@ -22,6 +22,8 @@
 		background: #181818;
 		border-radius: 3px;
 		padding: 20px;
+		max-height: calc(100svh - 100px);
+		overflow-y: auto;
 
 		.close {
 			position: absolute;

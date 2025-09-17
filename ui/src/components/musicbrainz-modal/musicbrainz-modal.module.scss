@@ -1,0 +1,120 @@
+.container {
+	width: calc(80vw - 40px);
+	max-width: 600px;
+
+	.heading {
+		text-align: center;
+	}
+
+	.search {
+		display: flex;
+		max-width: 400px;
+		margin: 0 auto 10px auto;
+		gap: 6px;
+
+		.searchbox {
+			flex-grow: 1;
+		}
+	}
+
+	.status {
+		min-height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.4rem;
+	}
+
+	.releases {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+
+		.release {
+			display: flex;
+			flex-direction: column;
+			border: 1px solid #272727;
+			border-radius: 3px;
+			overflow: hidden;
+
+			.releaseTop {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				.albumCover {
+					width: 60px;
+					height: 60px;
+					object-fit: cover;
+					// border-radius: 3px;
+				}
+
+				.info {
+					display: flex;
+					flex-direction: column;
+
+					.title {
+					}
+
+					.artist {
+						font-size: 0.8rem;
+					}
+				}
+			}
+
+			.medias {
+				display: flex;
+				flex-direction: column;
+
+				.media {
+					border-top: 1px solid #272727;
+					display: flex;
+					flex-direction: column;
+
+					.checkbox {
+						display: none;
+					}
+
+					.label {
+						cursor: pointer;
+						padding: 2px 8px;
+					}
+
+					.expand {
+						display: grid;
+						grid-template-rows: 0fr;
+						transition: grid-template-rows 0.2s;
+
+						.tracklist {
+							overflow: hidden;
+
+							.track {
+								display: flex;
+
+								.position {
+									width: 50px;
+									text-align: center;
+								}
+
+								.title {
+									flex-grow: 1;
+								}
+
+								.duration {
+									width: 50px;
+								}
+							}
+
+							.addButton {
+								margin: 10px 5px 5px 5px;
+							}
+						}
+					}
+
+					.checkbox:checked ~ .expand {
+						grid-template-rows: 1fr;
+					}
+				}
+			}
+		}
+	}
+}

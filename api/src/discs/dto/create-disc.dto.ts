@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
+	IsArray,
 	IsInt,
 	IsNotEmpty,
 	IsOptional,
@@ -34,4 +35,12 @@ export class CreateDiscDto {
 		type: "integer",
 	})
 	position?: number;
+
+	@IsOptional()
+	@IsArray()
+	@IsString({ each: true })
+	@ApiPropertyOptional({
+		type: [String],
+	})
+	tracks?: string[];
 }

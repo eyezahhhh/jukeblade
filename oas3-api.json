@@ -317,6 +317,39 @@
           "Discs"
         ]
       }
+    },
+    "/search/{query}": {
+      "get": {
+        "operationId": "SearchController_search",
+        "parameters": [
+          {
+            "name": "query",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SearchRelease"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Search"
+        ]
+      }
     }
   },
   "info": {
@@ -488,6 +521,12 @@
           },
           "position": {
             "type": "integer"
+          },
+          "tracks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
@@ -505,7 +544,8 @@
             "type": "string"
           },
           "position": {
-            "type": "integer"
+            "type": "integer",
+            "nullable": true
           }
         }
       },
@@ -530,6 +570,75 @@
         "required": [
           "title",
           "index"
+        ]
+      },
+      "SearchReleaseTrack": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "position",
+          "title",
+          "duration"
+        ]
+      },
+      "SearchReleaseMedia": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string",
+            "nullable": true
+          },
+          "tracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchReleaseTrack"
+            }
+          }
+        },
+        "required": [
+          "format",
+          "tracks"
+        ]
+      },
+      "SearchRelease": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "artist": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "albumCover": {
+            "type": "string",
+            "nullable": true
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchReleaseMedia"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "artist",
+          "title",
+          "albumCover",
+          "media"
         ]
       }
     }

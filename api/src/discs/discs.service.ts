@@ -13,6 +13,7 @@ import { LircService } from "src/lirc/lirc.service";
 import IrCode from "src/lirc/enum/ir-code.enum";
 import { AddTrackDto } from "./dto/add-track.dto";
 import { Track } from "./entity/track.entity";
+import { getDigitIrCode } from "src/utils";
 
 @Injectable()
 export class DiscsService {
@@ -72,6 +73,19 @@ export class DiscsService {
 			position: dto.position || null,
 		});
 		await this.discsRepository.insert(disc);
+
+		if (dto.tracks) {
+			const tracks = dto.tracks.map((track, index) =>
+				this.tracksRepository.create({
+					index: index + 1,
+					title: track,
+					disc: disc,
+				}),
+			);
+			await this.tracksRepository.insert(tracks);
+			disc.tracks = tracks;
+		}
+
 		return disc;
 	}
 
@@ -85,7 +99,18 @@ export class DiscsService {
 			if (existing && existing.uuid != disc.uuid) {
 				throw new ConflictException("Disc already exists at position");
 			}
+			disc.position = dto.position;
+		} else {
+			disc.position = null;
 		}
+		if (dto.artist) {
+			disc.artist = dto.artist;
+		}
+		if (dto.album) {
+			disc.album = dto.album;
+		}
+		await this.discsRepository.save(disc);
+		return disc;
 	}
 
 	async delete(uuid: string) {
@@ -102,21 +127,7 @@ export class DiscsService {
 		}
 		const sequence = [IrCode.DISC];
 		const chars = disc.position.toString().split("");
-		for (let char of chars) {
-			const code = {
-				"1": IrCode.NUM_1,
-				"2": IrCode.NUM_2,
-				"3": IrCode.NUM_3,
-				"4": IrCode.NUM_4,
-				"5": IrCode.NUM_5,
-				"6": IrCode.NUM_6,
-				"7": IrCode.NUM_7,
-				"8": IrCode.NUM_8,
-				"9": IrCode.NUM_9,
-				"0": IrCode.NUM_10_0,
-			}[char];
-			sequence.push(code);
-		}
+		sequence.push(...chars.map(getDigitIrCode));
 		sequence.push(IrCode.ENTER);
 		return sequence;
 	}
@@ -138,8 +149,16 @@ export class DiscsService {
 		}
 		const sequence = this.getPlaySequence(disc);
 		// todo: add track sequence here
+		if (track.index < 10) {
+			sequence.push(getDigitIrCode(track.index));
+		} else {
+			sequence.push(
+				IrCode.GREATER_10,
+				...track.index.toString().split("").map(getDigitIrCode),
+			);
+		}
 
-		return sequence;
+		if (sequence) return sequence;
 	}
 
 	play(disc: Disc) {

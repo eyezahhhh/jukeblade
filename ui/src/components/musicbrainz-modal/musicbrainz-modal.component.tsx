@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../modal";
 import Api from "../../api";
 import type { SearchRelease, SearchReleaseMedia } from "../../api-schema";
-import List from "../list";
 import styles from "./musicbrainz-modal.module.scss";
 import { cc, duration } from "../../utils/string.util";
 import { useNavigate } from "react-router";
+import useDiscsStore from "../../state/discs.store";
 
 interface Props {
 	open: boolean;
@@ -20,6 +20,7 @@ export function MusicbrainzModal({ open, onClose }: Props) {
 	const ref = useRef<HTMLInputElement>(null);
 	const [isAddingRelease, setIsAddingRelease] = useState(false);
 	const navigate = useNavigate();
+	const { fetchInsertedDiscs } = useDiscsStore();
 
 	useEffect(() => {
 		if (open) {
@@ -73,6 +74,7 @@ export function MusicbrainzModal({ open, onClose }: Props) {
 		})
 			.then(({ data }) => {
 				if (data) {
+					fetchInsertedDiscs().catch(console.error);
 					navigate(`/disc/${data.uuid}`);
 				}
 			})

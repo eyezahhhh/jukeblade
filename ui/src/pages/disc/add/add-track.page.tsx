@@ -6,7 +6,7 @@ import useDiscsStore from "../../../state/discs.store";
 
 export function AddTrackPage() {
 	const { uuid } = useParams();
-	const disc = useDisc(uuid);
+	const [disc] = useDisc(uuid);
 	const [title, setTitle] = useState("");
 	const [index, setIndex] = useState("");
 	const [isCreating, setIsCreating] = useState(false);

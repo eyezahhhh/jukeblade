@@ -17,6 +17,10 @@
 				display: block;
 			}
 		}
+
+		.delete {
+			display: block;
+		}
 	}
 
 	.start {
@@ -54,5 +58,16 @@
 
 	.album {
 		flex: 1;
+	}
+
+	.delete {
+		width: 25px;
+		height: 25px;
+		border: none;
+		position: relative;
+		background: transparent;
+		cursor: pointer;
+		color: #f8f9ff;
+		display: none;
 	}
 }

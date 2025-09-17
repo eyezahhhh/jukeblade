@@ -197,7 +197,7 @@ export interface components {
         UpdateDiscDto: {
             artist?: string;
             album?: string;
-            position?: number;
+            position?: number | null;
         };
         PlayDiscDto: {
             trackUuid?: string;

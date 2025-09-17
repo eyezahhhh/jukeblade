@@ -285,7 +285,7 @@
         "operationId": "DiscsController_deleteTrack",
         "parameters": [
           {
-            "name": "uuid",
+            "name": "discUuid",
             "required": true,
             "in": "path",
             "schema": {

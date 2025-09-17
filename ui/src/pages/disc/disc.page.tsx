@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import Api from "../../api";
 import styles from "./disc.module.scss";
 import useDisc from "../../hooks/disc.hook";
@@ -7,6 +7,7 @@ import TrackListEntry from "../../components/track-list-entry";
 import List from "../../components/list";
 import Row from "../../components/row";
 import Modal from "../../components/modal";
+import useDiscsStore from "../../state/discs.store";
 
 export function DiscPage() {
 	const { uuid } = useParams();
@@ -17,6 +18,10 @@ export function DiscPage() {
 	const [editArtist, setEditArtist] = useState("");
 	const [editPosition, setEditPosition] = useState("");
 	const [isEditing, setIsEditing] = useState(false);
+	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+	const [isDeleting, setIsDeleting] = useState(false);
+	const { fetchInsertedDiscs } = useDiscsStore();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (disc) {
@@ -45,7 +50,7 @@ export function DiscPage() {
 		}).finally(() => setIsPlaying(false));
 	};
 
-	const edit = () => {
+	const editDisc = () => {
 		if (!editArtist || !editAlbum || isEditing) {
 			return;
 		}
@@ -77,12 +82,34 @@ export function DiscPage() {
 		})
 			.then(({ data }) => {
 				if (data) {
-					updateDisc(disc);
+					updateDisc(data);
+					fetchInsertedDiscs().catch(console.error);
 					setEditModalOpen(false);
 				}
 			})
 			.finally(() => {
 				setIsEditing(false);
+			});
+	};
+
+	const deleteDisc = () => {
+		if (isDeleting) {
+			return;
+		}
+		setIsDeleting(true);
+		Api.DELETE("/discs/{uuid}", {
+			params: {
+				path: {
+					uuid: disc.uuid,
+				},
+			},
+		})
+			.then(() => {
+				fetchInsertedDiscs().catch(console.error);
+				navigate("/discs");
+			})
+			.finally(() => {
+				setIsDeleting(false);
 			});
 	};
 
@@ -113,8 +140,16 @@ export function DiscPage() {
 						placeholder="Position"
 						className="textInput"
 					/>
-					<button className="button" onClick={edit}>
+					<button className="button" onClick={editDisc}>
 						Save
+					</button>
+				</div>
+			</Modal>
+			<Modal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
+				<div className={styles.deleteModal}>
+					<h1>Delete CD</h1>
+					<button className="button" onClick={deleteDisc}>
+						Delete
 					</button>
 				</div>
 			</Modal>
@@ -135,11 +170,19 @@ export function DiscPage() {
 				<Link to={`/disc/${disc.uuid}/add`} className="button">
 					Add track
 				</Link>
+				<button className="button" onClick={() => setDeleteModalOpen(true)}>
+					Delete
+				</button>
 			</Row>
 
 			<List className={styles.tracks}>
 				{disc.tracks.map((track) => (
-					<TrackListEntry track={track} key={track.uuid} disc={disc} />
+					<TrackListEntry
+						track={track}
+						key={track.uuid}
+						disc={disc}
+						onDelete={updateDisc}
+					/>
 				))}
 			</List>
 		</div>

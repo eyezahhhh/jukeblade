@@ -96,7 +96,7 @@ export class DiscsController {
 		type: Disc,
 	})
 	async deleteTrack(
-		@Param("uuid") discUuid: string,
+		@Param("discUuid") discUuid: string,
 		@Param("trackUuid") trackUuid: string,
 	) {
 		const disc = await this.discsService.findByUuid(discUuid);

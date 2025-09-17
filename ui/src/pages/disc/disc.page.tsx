@@ -20,6 +20,10 @@ export function DiscPage() {
 	const [isEditing, setIsEditing] = useState(false);
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
+	const [addTrackModalOpen, setAddTrackModelOpen] = useState(false);
+	const [addTrackTitle, setAddTrackTitle] = useState("");
+	const [addTrackIndex, setAddTrackIndex] = useState("");
+	const [isAddingTrack, setIsAddingTrack] = useState(false);
 	const { fetchInsertedDiscs } = useDiscsStore();
 	const navigate = useNavigate();
 
@@ -30,6 +34,11 @@ export function DiscPage() {
 			setEditPosition(disc.position?.toString() || "");
 		}
 	}, [editModalOpen, disc]);
+
+	useEffect(() => {
+		setAddTrackTitle("");
+		setAddTrackIndex("");
+	}, [addTrackModalOpen]);
 
 	if (!disc) {
 		return <h1>Loading</h1>;
@@ -113,6 +122,43 @@ export function DiscPage() {
 			});
 	};
 
+	const addTrack = () => {
+		if (!addTrackTitle || !addTrackIndex || isAddingTrack) {
+			return;
+		}
+
+		const number = Number(addTrackIndex);
+		if (isNaN(number) || !!(number % 1)) {
+			return;
+		}
+		if (number < 1 || number > 99) {
+			return;
+		}
+		const finalIndex = number;
+
+		setIsAddingTrack(true);
+		Api.PUT("/discs/{uuid}/track", {
+			params: {
+				path: {
+					uuid: disc.uuid,
+				},
+			},
+			body: {
+				title: addTrackTitle,
+				index: finalIndex,
+			},
+		})
+			.then(({ data }) => {
+				if (data) {
+					setAddTrackModelOpen(false);
+					updateDisc(data);
+				}
+			})
+			.finally(() => {
+				setIsAddingTrack(false);
+			});
+	};
+
 	return (
 		<div className={styles.container}>
 			<Modal open={editModalOpen} onClose={() => setEditModalOpen(false)}>
@@ -153,6 +199,31 @@ export function DiscPage() {
 					</button>
 				</div>
 			</Modal>
+			<Modal
+				open={addTrackModalOpen}
+				onClose={() => setAddTrackModelOpen(false)}
+			>
+				<div className={styles.addTrackModal}>
+					<h1>Add Track</h1>
+					<input
+						value={addTrackTitle}
+						onChange={(e) =>
+							setAddTrackTitle(e.currentTarget.value.substring(0, 500))
+						}
+						placeholder="Title"
+						className="textInput"
+					/>
+					<input
+						value={addTrackIndex}
+						onChange={(e) => setAddTrackIndex(e.currentTarget.value)}
+						placeholder="Index"
+						className="textInput"
+					/>
+					<button onClick={addTrack} className="button">
+						Create
+					</button>
+				</div>
+			</Modal>
 			<h1 className={styles.album}>{disc.album}</h1>
 			<h2 className={styles.artist}>{disc.artist}</h2>
 			<h3 className={styles.position}>
@@ -167,9 +238,9 @@ export function DiscPage() {
 				<button onClick={() => setEditModalOpen(true)} className="button">
 					Edit
 				</button>
-				<Link to={`/disc/${disc.uuid}/add`} className="button">
+				<button onClick={() => setAddTrackModelOpen(true)} className="button">
 					Add track
-				</Link>
+				</button>
 				<button className="button" onClick={() => setDeleteModalOpen(true)}>
 					Delete
 				</button>

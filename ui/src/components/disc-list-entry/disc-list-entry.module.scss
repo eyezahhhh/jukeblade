@@ -1,9 +1,13 @@
 .container {
-	display: flex;
-	color: #fff;
 	text-decoration: none;
+	container: #{container} / inline-size;
+}
+
+.disc {
 	font-size: 1.2rem;
 	padding: 4px 8px;
+	display: flex;
+	color: #fff;
 
 	&:focus,
 	&:hover {
@@ -15,11 +19,40 @@
 		text-align: center;
 	}
 
-	.artist {
-		flex: 1;
-	}
+	.info {
+		display: flex;
+		flex-grow: 1;
 
-	.album {
-		flex: 1;
+		.artist {
+			flex: 1;
+		}
+
+		.album {
+			flex: 1;
+		}
+	}
+}
+
+@container #{container} (max-width: 800px) {
+	.disc {
+		font-size: 1rem;
+
+		.position {
+			width: 35px;
+		}
+	}
+}
+
+@container #{container} (max-width: 600px) {
+	.disc {
+		align-items: center;
+
+		.info {
+			flex-direction: column-reverse;
+
+			.artist {
+				font-size: 0.8rem;
+			}
+		}
 	}
 }

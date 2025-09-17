@@ -1,8 +1,13 @@
 .container {
+	container: #{container} / inline-size;
+}
+
+.track {
 	display: flex;
 	font-size: 1.2rem;
 	padding: 4px 8px;
 	color: #f8f9ff;
+	align-items: center;
 
 	&:focus,
 	&:hover {
@@ -48,16 +53,21 @@
 		}
 	}
 
-	.title {
-		flex: 1;
-	}
+	.info {
+		display: flex;
+		flex-grow: 1;
 
-	.artist {
-		flex: 1;
-	}
+		.title {
+			flex: 1;
+		}
 
-	.album {
-		flex: 1;
+		.artist {
+			flex: 1;
+		}
+
+		.album {
+			flex: 1;
+		}
 	}
 
 	.delete {
@@ -69,5 +79,29 @@
 		cursor: pointer;
 		color: #f8f9ff;
 		display: none;
+
+		svg {
+			position: absolute;
+			inset: 0;
+		}
+	}
+}
+
+@container #{container} (max-width: 800px) {
+	.track {
+		font-size: 1rem;
+	}
+}
+
+@container #{container} (max-width: 700px) {
+	.track {
+		.info {
+			flex-direction: column;
+
+			.artist,
+			.album {
+				font-size: 0.8rem;
+			}
+		}
 	}
 }

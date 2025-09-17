@@ -458,7 +458,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                uuid: string;
+                discUuid: string;
                 trackUuid: string;
             };
             cookie?: never;

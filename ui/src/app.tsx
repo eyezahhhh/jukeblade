@@ -3,7 +3,6 @@ import { Link, Route, Routes, useLocation } from "react-router";
 import RemotePage from "./pages/remote";
 import { cc } from "./utils/string.util";
 import DiscsPage from "./pages/discs";
-import CreateDiscPage from "./pages/discs/create";
 import DiscPage from "./pages/disc";
 
 export default function App() {
@@ -38,7 +37,6 @@ export default function App() {
 				<Routes>
 					<Route path="/remote" element={<RemotePage />} />
 					<Route path="/discs" element={<DiscsPage />} />
-					<Route path="/discs/create" element={<CreateDiscPage />} />
 					<Route path="/disc/:uuid" element={<DiscPage />} />
 				</Routes>
 			</div>

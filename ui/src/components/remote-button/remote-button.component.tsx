@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function RemoteButton({ code }: Props) {
-	const { name, memoInputName } = useMemo(() => getIrCodeName(code), [code]);
+	const { name } = useMemo(() => getIrCodeName(code), [code]);
 	const [isPressed, setIsPressed] = useState(false);
 
 	return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Api from "../../api";
 import styles from "./disc.module.scss";
 import useDisc from "../../hooks/disc.hook";
@@ -253,6 +253,8 @@ export function DiscPage() {
 						key={track.uuid}
 						disc={disc}
 						onDelete={updateDisc}
+						noAlbum
+						noArtist
 					/>
 				))}
 			</List>

@@ -89,6 +89,7 @@
 
 @container #{container} (max-width: 800px) {
 	.track {
+		min-height: 35px;
 		font-size: 1rem;
 	}
 }

@@ -34,8 +34,6 @@ const useDiscsStore = create<DiscsState>((set, get) => ({
 				};
 			});
 			return data;
-		} catch (e) {
-			throw e;
 		} finally {
 			set((old) => {
 				if (old.insertedDiscsController == controller) {

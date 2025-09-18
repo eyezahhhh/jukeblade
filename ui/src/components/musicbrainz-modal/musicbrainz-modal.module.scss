@@ -8,12 +8,15 @@
 
 	.search {
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		max-width: 400px;
 		margin: 0 auto 10px auto;
 		gap: 6px;
 
 		.searchbox {
 			flex-grow: 1;
+			max-width: 100%;
 		}
 	}
 

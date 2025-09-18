@@ -3,7 +3,7 @@
 	cursor: pointer;
 	flex: 1;
 	border-radius: 5px;
-	background: linear-gradient(180deg, #616565 0%, #323733 10%, #070d0d 100%);
+	background: linear-gradient(180deg, #545454 0%, #343434 10%, #2d2c31 100%);
 	color: #d0d4c7;
 	transform: translateY(0);
 	transition: transform 0.05s;
@@ -12,8 +12,7 @@
 
 	&.pressed,
 	&:active {
-		background: blue;
-		background: linear-gradient(0deg, #616565 0%, #323733 10%, #070d0d 100%);
+		background: linear-gradient(0deg, #545454 0%, #343434 10%, #2d2c31 100%);
 		transform: translateY(1px);
 	}
 }

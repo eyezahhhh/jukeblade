@@ -94,7 +94,7 @@ export function DiscsPage() {
 					</button>
 				</div>
 			</Modal>
-			<Row>
+			<Row className={styles.buttons}>
 				<button className="button" onClick={() => setAddOpen(true)}>
 					Create
 				</button>

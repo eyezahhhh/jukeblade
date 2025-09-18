@@ -1,4 +1,3 @@
-<div style="display: flex; align-items: center; gap: 15px">
-  <img src="https://raw.githubusercontent.com/eyezahhhh/jukeblade/refs/heads/main/ui/public/favicon-512x512.png" alt="Jukeblade logo" width="45" height="45" />
-  <h1 style="margin: 0;">Jukeblade</h1>
-</div>
+<img src="https://raw.githubusercontent.com/eyezahhhh/jukeblade/refs/heads/main/ui/public/favicon-512x512.png" alt="Jukeblade logo" width="45" height="45" />
+
+<h1 style="margin: 0;">Jukeblade</h1>

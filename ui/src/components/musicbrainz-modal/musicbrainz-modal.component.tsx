@@ -30,7 +30,7 @@ export function MusicbrainzModal({ open, onClose }: Props) {
 
 	useEffect(() => {
 		setReleases([]);
-		if (!query) {
+		if (!searchQuery) {
 			return;
 		}
 
